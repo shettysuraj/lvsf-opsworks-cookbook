@@ -1,0 +1,15 @@
+test:
+  pre:
+    - bundle exec bundle exec foodcritic -f any .
+    - bundle exec rubocop .
+  post:
+    - bundle exec kitchen test
+
+deployment:
+  git_tag:
+    branch: master
+    commands:
+      - git config --global user.email "tech@livesafemobile.com"
+      - git config --global user.name "Circle CI"
+      - git tag -am "`bundle exec ./print_cookbook_version`" `bundle exec ./print_cookbook_version`
+      - git push --tags

@@ -1,0 +1,55 @@
+map $domain $proxy_proto {
+    default         https;
+    livesafemobile  https;
+    hexxie          http;
+}
+
+# Explicitly deny non-matching Host header fields
+server {
+    listen 80 default_server;
+    server_name "";
+    return 444;
+}
+
+server {
+    listen 80;
+
+    proxy_redirect off;
+    resolver 208.67.222.222 208.67.220.220;
+
+    server_name ~^(?<tier_prefix>.*-)?(services|dashboard)\.(?<domain>livesafemobile|hexxie)\.com$;
+
+    set $dashboard_upstream "${tier_prefix}php-service-layer.${domain}.com";
+    set $php_services_upstream "${tier_prefix}php-service-layer.${domain}.com";
+    set $nodejs_services_upstream "${tier_prefix}nodejs-service-layer.${domain}.com";
+
+    # Entry for speed of looking up '/'
+    location = / {
+        proxy_pass "${proxy_proto}://${dashboard_upstream}";
+    }
+
+    # PHP Services
+    location = /2/ {
+        proxy_pass "${proxy_proto}://${php_services_upstream}";
+    }
+    
+    # New services
+    location /api/ {
+        proxy_pass "${proxy_proto}://${nodejs_services_upstream}";
+    }
+
+    # Default / fallback
+    location / {
+        proxy_pass "${proxy_proto}://${dashboard_upstream}";
+    }
+}
+
+# Server for testing
+server {
+    listen 80;
+
+    server_name ~^(?<tier_prefix>.*-)?(?<service_layer>php|nodejs)-service-layer\.hexxie\.com$;
+
+    add_header Content-Type text/plain;
+    return 200 "You have reached: ${tier_prefix}${service_layer}";
+}

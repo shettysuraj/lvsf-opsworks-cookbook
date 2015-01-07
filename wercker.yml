@@ -1,0 +1,47 @@
+box: wercker/rvm
+# Build definition
+build:
+    # The steps that will be executed on build
+    # See the Ruby section on the wercker devcenter:
+    # http://devcenter.wercker.com/articles/languages/ruby.html
+    steps:
+        # Uncomment this to force RVM to use a specific Ruby version
+        # - rvm-use:
+        #       version: 2.1.5
+
+        # A step that executes `bundle install` command
+        - bundle-install
+
+        # A custom script step, name value is used in the UI
+        # and the code value contains the command that get executed
+        - script:
+            name: echo ruby information
+            code: |
+                echo "ruby version $(ruby --version) running"
+                echo "from location $(which ruby)"
+                echo -p "gem list: $(gem list)"
+
+        # Berkshelf
+        - script:
+            name: berkshelf
+            code: bundle exec berks install
+
+        # foodcritic (will be replaced with Strainer)
+        - script:
+            name: foodcritic
+            code: bundle exec foodcritic -f any .
+
+        # rubocop (will be replaced with Strainer)
+        - script:
+            name: rubocop
+            code: bundle exec rubocop .
+
+        # chefspec (will be replaced with Strainer)
+        - script:
+            name: chefspec
+            code: bundle exec rspec --color
+            
+    after-steps:
+        - dignifiedquire/flowdock-notify:
+            token: $FLOWDOCK_TOKEN
+            from_address: werckerbot@company.com

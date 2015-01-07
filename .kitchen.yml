@@ -1,0 +1,36 @@
+---
+driver:
+  name: vagrant
+  forward_agent: true
+
+provisioner:
+  name: chef_solo
+  require_chef_omnibus: '11.10.4'
+
+platforms:
+  - name: ubuntu-14.04
+
+suites:
+  - name: php-setup
+    driver:
+      network:
+        - ["forwarded_port", {guest: 80, host: 8080}]
+    run_list: 
+      - recipe[lvsf-opsworks-cookbook::php_setup]
+      - recipe[test-helper::default]
+      # - recipe[lvsf-opsworks-php-cookbook::deploy_local]
+    attributes:
+      deploy_local:
+        lvsf_dashboard:
+          git_url: ''
+          git_rev: 'master'
+        lvsf_php_services:
+          git_url: ''
+          git_rev: 'master'
+  - name: ingress-router-setup
+    driver:
+      network:
+        - ["forwarded_port", {guest: 80, host: 8888}]
+    run_list: 
+      - recipe[lvsf-opsworks-cookbook::ingress_router_setup]
+      - recipe[test-helper::default]

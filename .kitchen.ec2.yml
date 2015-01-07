@@ -1,0 +1,22 @@
+---
+driver:
+  name: ec2
+  ssh_key: <%= File.expand_path('~/.ssh/id_null') %>
+  require_chef_omnibus: '11.10.4'
+  iam_profile_name: 'chef-ci'
+  security_group_ids: ['chef-ci']
+
+platforms:
+  - name: ubuntu-14.04
+    driver:
+      image_id: ami-c65be9ae
+      username: ubuntu
+suites:
+  - name: php-setup
+    run_list: 
+      - recipe[lvsf-opsworks-cookbook::php_setup]
+      - recipe[test-helper::default]
+  - name: ingress-router-setup
+    run_list: 
+      - recipe[lvsf-opsworks-cookbook::ingress_router_setup]
+      - recipe[test-helper::default]

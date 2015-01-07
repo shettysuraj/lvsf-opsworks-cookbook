@@ -1,0 +1,6 @@
+# Strainerfile
+
+foodcritic: bundle exec foodcritic -f any -t "~FC007" $SANDBOX/$COOKBOOK
+rubocop:    bundle exec rubocop $SANDBOX/$COOKBOOK/
+chefspec:   bundle exec rspec --color
+kitchen:    bundle exec kitchen test
