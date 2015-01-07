@@ -1,6 +1,4 @@
-[![Circle CI](https://circleci.com/gh/LiveSafe/lvsf-opsworks-php-cookbook.svg?style=svg)](https://circleci.com/gh/LiveSafe/lvsf-opsworks-php-cookbook)
-
-# lvsf-opsworks-php-cookbook
+# lvsf-opsworks-cookbook [![Circle CI](https://circleci.com/gh/LiveSafe/lvsf-opsworks-cookboook.svg?style=svg)](https://circleci.com/gh/LiveSafe/lvsf-opsworks-cookboook) [![wercker status](https://app.wercker.com/status/2c48e40ece2552cd83e362ddbe0234f3/m "wercker status")](https://app.wercker.com/project/bykey/2c48e40ece2552cd83e362ddbe0234f3)
 
 Cookbook that brings up any of our PHP apps.
 
