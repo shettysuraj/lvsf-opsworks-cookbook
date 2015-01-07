@@ -1,6 +1,6 @@
 test:
   pre:
-    - bundle exec bundle exec foodcritic -f any .
+    - bundle exec bundle exec foodcritic -f any -t "~FC007" .
     - bundle exec rubocop .
   post:
     - bundle exec kitchen test

@@ -29,7 +29,7 @@ build:
         # foodcritic (will be replaced with Strainer)
         - script:
             name: foodcritic
-            code: bundle exec foodcritic -f any .
+            code: bundle exec foodcritic -f any -t "~FC007" .
 
         # rubocop (will be replaced with Strainer)
         - script:
