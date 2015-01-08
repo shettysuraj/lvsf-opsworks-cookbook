@@ -23,6 +23,12 @@ server {
     set $php_services_upstream "${tier_prefix}php-service-layer.${domain}.com";
     set $nodejs_services_upstream "${tier_prefix}nodejs-service-layer.${domain}.com";
 
+    # ELB Health check URL
+    location = /elb-health-check {
+        add_header Content-Type text/plain;
+        return 200 "Success";
+    }
+
     # Entry for speed of looking up '/'
     location = / {
         proxy_pass "${proxy_proto}://${dashboard_upstream}";
