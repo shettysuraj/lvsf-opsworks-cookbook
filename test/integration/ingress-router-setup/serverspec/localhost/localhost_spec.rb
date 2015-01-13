@@ -18,6 +18,7 @@ end
 
 {
   'dashboard.hexxie.com/elb-health-check' => /^Success$/,
+  'crazy-town-domain.hexxie.com/elb-health-check' => /^Success$/,
   'dashboard.hexxie.com' => /^You have reached: php$/,
   'services.hexxie.com' => /^You have reached: php$/,
   'services.hexxie.com/2/service/name' => /^You have reached: php$/,
