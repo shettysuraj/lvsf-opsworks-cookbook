@@ -8,7 +8,16 @@ map $domain $proxy_proto {
 server {
     listen 80 default_server;
     server_name "";
-    return 444;
+
+    # ELB Health check URL
+    location = /elb-health-check {
+        add_header Content-Type text/plain;
+        return 200 "Success";
+    }
+
+    location = / {
+        return 444;
+    }
 }
 
 server {

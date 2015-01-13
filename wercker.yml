@@ -44,4 +44,4 @@ build:
     after-steps:
         - dignifiedquire/flowdock-notify:
             token: $FLOWDOCK_TOKEN
-            from_address: werckerbot@company.com
+            from_address: spain+wercker@livesafemobile.com
