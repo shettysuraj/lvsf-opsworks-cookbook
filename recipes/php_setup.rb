@@ -11,7 +11,6 @@ include_recipe 'php5-fpm'
 include_recipe 'php5-fpm::install'
 include_recipe 'php5-fpm::create_user'
 include_recipe 'php5-fpm::configure_pools'
-include_recipe 'php5-fpm::configure_fpm'
 
 include_recipe 'apt'
 include_recipe 'nginx'
