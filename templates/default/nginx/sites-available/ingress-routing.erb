@@ -4,6 +4,13 @@ map $domain $proxy_proto {
     hexxie          http;
 }
 
+# Forward HTTP to HTTPS
+server {
+    listen      8080    default_server;
+    server_name "";
+    return      301     https://$host$request_uri;
+}
+
 # Explicitly deny non-matching Host header fields
 server {
     listen 80 default_server;
